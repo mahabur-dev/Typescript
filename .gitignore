@@ -9,8 +9,6 @@ yarn.lock
 pnpm-lock.yaml
 
 # Environment variables and secrets
-.env
-.env.local
 .env.*.local
 .env.production.local
 
@@ -32,7 +30,6 @@ lerna-debug.log*
 ehthumbs.db
 Thumbs.db
 .idea/
-.vscode/
 *.swp
 *.swo
 *~
@@ -89,7 +86,6 @@ reports/
 .coverage
 
 # Misc
-.env.test
 .env.test.local
 dist-ssr/
 .jest/
@@ -98,3 +94,7 @@ dist-ssr/
 .fleet/
 .ionide/
 *.code-workspace
+config.bat
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat

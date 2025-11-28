@@ -2,8 +2,7 @@
   "name": "express-auth-api",
   "version": "1.0.0",
   "scripts": {
-    "dev": "nodemon",
-    "dev:ts-node": "ts-node-dev --respawn --files src/app.ts",
+    "dev": "ts-node-dev --respawn --files src/app.ts",
     "build": "tsc",
     "start": "node dist/app.js"
   },

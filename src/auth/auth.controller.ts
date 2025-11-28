@@ -2,14 +2,9 @@ import { Request, Response, NextFunction } from 'express';
 import { AuthService } from './auth.service';
 import { sendSuccess } from '../utils/response';
 import { IRegisterRequest, ILoginRequest } from './auth.interface';
+import { AppError } from '../utils/appError';
 
-/**
- * Authentication Controller
- * Handles HTTP requests and responses for authentication
- */
 
-//check
-//check
 export class AuthController {
   private authService: AuthService;
 
@@ -17,11 +12,6 @@ export class AuthController {
     this.authService = new AuthService();
   }
 
-  /**
-   * Register a new user
-   * @route POST /api/auth/register
-   * @access Public
-   */
   register = async (
     req: Request<{}, {}, IRegisterRequest>,
     res: Response,
@@ -36,11 +26,6 @@ export class AuthController {
     }
   };
 
-  /**
-   * Login existing user
-   * @route POST /api/auth/login
-   * @access Public
-   */
   login = async (
     req: Request<{}, {}, ILoginRequest>,
     res: Response,
@@ -55,11 +40,6 @@ export class AuthController {
     }
   };
 
-  /**
-   * Get authenticated user profile
-   * @route GET /api/auth/profile
-   * @access Private
-   */
   getProfile = async (
     req: Request,
     res: Response,
@@ -69,7 +49,7 @@ export class AuthController {
       const userId = req.user?._id;
       
       if (!userId) {
-        throw new Error('User ID not found in request');
+        throw new AppError('User ID not found in request', 404);
       }
 
       // 🔧 FIX: Convert ObjectId to string
@@ -81,11 +61,6 @@ export class AuthController {
     }
   };
 
-  /**
-   * Update user profile
-   * @route PATCH /api/auth/profile
-   * @access Private
-   */
   updateProfile = async (
     req: Request,
     res: Response,
@@ -108,11 +83,6 @@ export class AuthController {
     }
   };
 
-  /**
-   * Delete user account
-   * @route DELETE /api/auth/account
-   * @access Private
-   */
   deleteAccount = async (
     req: Request,
     res: Response,
@@ -122,7 +92,7 @@ export class AuthController {
       const userId = req.user?._id;
 
       if (!userId) {
-        throw new Error('User ID not found in request');
+        throw new AppError('User ID not found in request', 404);
       }
 
       // 🔧 FIX: Convert ObjectId to string

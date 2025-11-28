@@ -10,7 +10,6 @@ const userSchema = new Schema<IUserDocument>(
       type: String,
       required: [true, 'Email is required'],
       unique: true,
-      lowercase: true,
       trim: true,
       match: [
         /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
@@ -48,10 +47,6 @@ const userSchema = new Schema<IUserDocument>(
   }
 );
 
-/**
- * Indexes for performance optimization
- */
-userSchema.index({ email: 1 });
 
 /**
  * User Model Export
