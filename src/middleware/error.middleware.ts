@@ -1,6 +1,6 @@
 // ==================== src/middleware/error.middleware.ts ====================
-import { Request, Response, NextFunction } from 'express';
-import { sendError } from '../utils/response';
+import { Request, Response, NextFunction } from "express";
+import { sendError } from "../utils/response";
 
 export const errorHandler = (
   err: any,
@@ -8,15 +8,12 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  console.error('Error:', err);
+  const statusCode = err.statusCode || 500;
 
-  if (err.name === 'ValidationError') {
-    return sendError(res, 400, err.message);
-  }
-
-  if (err.code === 11000) {
-    return sendError(res, 400, 'Email already exists');
-  }
-
-  sendError(res, 500, 'Internal server error');
+  res.status(statusCode).json({
+    statusCode: statusCode,
+    success: false,
+    message: err.message || "Internal server error",
+    err: err || "",
+  });
 };
