@@ -9,18 +9,9 @@ import { hashPassword, comparePassword } from '../utils/password';
 import { generateToken } from '../utils/jwt';
 import { AppError } from '../utils/appError';
 
-/**
- * Authentication Service
- * Handles all authentication business logic
- */
+
 export class AuthService {
   
-  /**
-   * Register a new user
-   * @param data - Registration data (email, password, name)
-   * @returns User object and JWT token
-   * @throws AppError if email already exists
-   */
   async register(data: IRegisterRequest): Promise<IAuthResponse> {
     const { email, password, name } = data;
 
@@ -28,6 +19,7 @@ export class AuthService {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       throw new AppError('Email already registered', 409);
+
     }
 
     // Hash password
@@ -46,12 +38,6 @@ export class AuthService {
     return { user, token };
   }
 
-  /**
-   * Login existing user
-   * @param data - Login credentials (email, password)
-   * @returns User object and JWT token
-   * @throws AppError if credentials are invalid
-   */
   async login(data: ILoginRequest): Promise<IAuthResponse> {
     const { email, password } = data;
 
@@ -72,12 +58,6 @@ export class AuthService {
     return { user, token };
   }
 
-  /**
-   * Get user profile by ID
-   * @param userId - User ID
-   * @returns User document
-   * @throws AppError if user not found
-   */
   async getProfile(userId: string): Promise<IUserDocument> {
     const user = await User.findById(userId);
 
@@ -88,12 +68,6 @@ export class AuthService {
     return user;
   }
 
-  /**
-   * Update user profile
-   * @param userId - User ID
-   * @param updates - Fields to update
-   * @returns Updated user document
-   */
   async updateProfile(
     userId: string, 
     updates: Partial<Pick<IUserDocument, 'name' | 'email'>>
@@ -111,10 +85,6 @@ export class AuthService {
     return user;
   }
 
-  /**
-   * Delete user account
-   * @param userId - User ID
-   */
   async deleteAccount(userId: string): Promise<void> {
     const result = await User.findByIdAndDelete(userId);
 
